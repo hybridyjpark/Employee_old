@@ -56,13 +56,13 @@ public class MockDeptDao implements DeptDao {
 	}
 
 	@Override
-	public List<Dept> selectAll() throws SQLException {
+	public List<Dept> selectAll(){
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Dept> selectAllWithEmps() throws SQLException {
+	public List<Dept> selectAllWithEmps(){
 		// TODO Auto-generated method stub
 		return null;
 	}

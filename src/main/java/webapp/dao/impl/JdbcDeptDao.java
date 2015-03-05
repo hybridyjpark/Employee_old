@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,7 +24,8 @@ import webapp.util.GlobalVars;
 public class JdbcDeptDao implements DeptDao {
 
 	DataSource dataSource;
-	static Logger log = Logger.getLogger(JdbcDeptDao.class);
+	// static Logger log = Logger.getLogger(JdbcDeptDao.class);
+	static Log log = LogFactory.getLog(JdbcDeptDao.class);
 
 	@Override
 	public Dept selectByDeptno(Integer deptno) {
@@ -52,7 +55,7 @@ public class JdbcDeptDao implements DeptDao {
 		} catch (SQLException e) {
 			throw new DataRetrievalFailureException("fail", e);
 		}
-		
+
 		if (dept == null) {
 			throw new EmptyResultDataAccessException("dept empty row", 1);
 		}
@@ -63,20 +66,20 @@ public class JdbcDeptDao implements DeptDao {
 	@Override
 	public Dept selectByDeptnoWithEmps(Integer deptno) {
 
-		log.info("##############################");
+		log.info("#########################");
 		log.info("selectByDeptnoWithEmps(" + deptno + ")");
-		log.info("##############################");
+		log.info("#########################");
 
 		Connection con = DataSourceUtils.getConnection(dataSource);
 		Dept dept = null;
 		List<Emp> emps = null;
-		
+
 		try {
-			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_DEPTNO_WITH_EMPS);
+			PreparedStatement pstmt = con
+					.prepareStatement(SELECT_BY_DEPTNO_WITH_EMPS);
 			pstmt.setInt(1, deptno);
 
 			ResultSet rs = pstmt.executeQuery();
-			
 
 			while (rs.next()) {
 				if (dept == null) {
@@ -104,24 +107,51 @@ public class JdbcDeptDao implements DeptDao {
 			throw new DataRetrievalFailureException("fail...", e);
 		}
 
-			if (dept != null) {
-				dept.setEmps(emps);
-			} else {
-				throw new EmptyResultDataAccessException("dept empty row", 1);
-			}
+		if (dept != null) {
+			dept.setEmps(emps);
+		} else {
+			throw new EmptyResultDataAccessException("dept empty row", 1);
+		}
 
 		return dept;
 	}
 
 	@Override
 	public List<Dept> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("###########");
+		log.info("selectAll()");
+		log.info("###########");
+
+		List<Dept> list = null;
+		Connection con = DataSourceUtils.getConnection(dataSource);
+		try {
+			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				if (list == null) {
+					list = new ArrayList<Dept>();
+				}
+				Dept d = new Dept();
+				d.setDeptno(rs.getInt("deptno"));
+				d.setDname(rs.getString("dname"));
+				d.setLoc(rs.getString("loc"));
+				list.add(d);
+			}
+
+		} catch (SQLException e) {
+			throw new DataRetrievalFailureException("selectAll()", e);
+		}
+
+		return list;
 	}
 
 	@Override
 	public List<Dept> selectAllWithEmps() {
-		// TODO Auto-generated method stub
+		log.info("###################");
+		log.info("selectAllWithEmps()");
+		log.info("###################");
 		return null;
 	}
 

@@ -38,8 +38,7 @@ public class SpringJdbcDeptDao implements DeptDao {
 	class DeptResultSetExtractor implements ResultSetExtractor<Dept> {
 
 		@Override
-		public Dept extractData(ResultSet rs) throws SQLException,
-				DataAccessException {
+		public Dept extractData(ResultSet rs) throws SQLException, DataAccessException {
 
 			Dept dept = null;
 			List<Emp> emps = null;
@@ -90,13 +89,19 @@ public class SpringJdbcDeptDao implements DeptDao {
 	}
 
 	@Override
-	public List<Dept> selectAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Dept> selectAll() {
+		log.info("###########");
+		log.info("selectAll()");
+		log.info("###########");
+		
+		JdbcTemplate template = new JdbcTemplate(dataSource);
+		
+		
+		return template.query(SELECT_ALL, new BeanPropertyRowMapper<Dept>(Dept.class));
 	}
 
 	@Override
-	public List<Dept> selectAllWithEmps() throws SQLException {
+	public List<Dept> selectAllWithEmps() {
 		// TODO Auto-generated method stub
 		return null;
 	}

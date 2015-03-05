@@ -62,4 +62,12 @@ public class DeptInfoServiceTest {
 				}
 			}
 	}
+	
+	@Test
+	public void testGetDeptInfoAll() {
+		DeptInfoService service = factory.getBean(DeptInfoService.class);
+		List<Dept> list = service.getDeptInfoAll();
+		assertNotNull(list);
+	}
+	
 }

@@ -24,17 +24,17 @@
 	</bean>
 
 	<bean id="deptDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="mapperInterface" value="webapp.dao.DeptDao" />
+	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	<property name="mapperInterface" value="webapp.dao.DeptDao" />
 	</bean>
 
-	<!-- <bean id="deptDao" class="webapp.dao.impl.JdbcDeptDao"> -->
-	<!-- <property name="dataSource" ref="dataSource" /> -->
-	<!-- </bean> -->
+<!-- 	<bean id="deptDao" class="webapp.dao.impl.JdbcDeptDao"> -->
+<!-- 	<property name="dataSource" ref="dataSource" /> -->
+<!-- 	</bean> -->
 
-	<!-- <bean id="deptDao" class="webapp.dao.impl.SpringJdbcDeptDao"> -->
-	<!-- <property name="dataSource" ref="dataSource" /> -->
-	<!-- </bean> -->
+<!-- 	<bean id="deptDao" class="webapp.dao.impl.SpringJdbcDeptDao"> -->
+<!-- 	<property name="dataSource" ref="dataSource" /> -->
+<!-- 	</bean> -->
 
 	<bean id="deptInfoService" class="webapp.service.DeptInfoService">
 		<property name="dataSource" ref="dataSource" />
